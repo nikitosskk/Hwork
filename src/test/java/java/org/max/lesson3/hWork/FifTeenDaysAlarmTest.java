@@ -1,12 +1,19 @@
 package org.max.lesson3.hWork;
 
+import io.qameta.allure.Description;
+import io.qameta.allure.Epic;
+import io.qameta.allure.Feature;
+import io.qameta.allure.Severity;
+import io.qameta.allure.SeverityLevel;
 import org.junit.jupiter.api.Test;
 
-import static io.restassured.RestAssured.given;
-
-public class FifTeenDaysAlarmTest extends AccuweatherAbstractTest{
+@Epic("AccuWeather API")
+@Feature("Предупреждения на 15 дней")
+public class FifTeenDaysAlarmTest extends AccuweatherAbstractTest {
 
     @Test
+    @Description("Проверка получения предупреждений на 15 дней по ID города")
+    @Severity(SeverityLevel.CRITICAL)
     void test15DayAlarm() {
         given().queryParam("apikey", getApiKey())
                 .when()

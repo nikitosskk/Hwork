@@ -1,0 +1,36 @@
+name: Run tests with Allure report
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Установка JDK
+      - name: Set up JDK
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'adoptium'
+
+      # Сборка и тестирование
+      - name: Build and Test
+        run: mvn clean test
+
+      # Генерация отчета Allure
+      - name: Generate Allure Report
+        run: mvn allure:report
+
+      # Публикация отчета Allure
+      - name: Upload Allure Report
+        uses: actions/upload-artifact@v3
+        with:
+          name: allure-report
+          path: target/allure-report

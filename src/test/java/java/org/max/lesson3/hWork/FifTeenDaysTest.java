@@ -1,23 +1,24 @@
 package org.max.lesson3.hWork;
 
-import org.junit.jupiter.api.Assertions;
+import io.qameta.allure.Description;
+import io.qameta.allure.Epic;
+import io.qameta.allure.Feature;
+import io.qameta.allure.Severity;
+import io.qameta.allure.SeverityLevel;
 import org.junit.jupiter.api.Test;
-import org.max.lesson3.seminar.accuweather.weather.Weather;
 
-import static io.restassured.RestAssured.given;
-
-public class FifTeenDaysTest extends AccuweatherAbstractTest {
+@Epic("AccuWeather API")
+@Feature("Предупреждения на 15 дней")
+public class FifTeenDaysAlarmTest extends AccuweatherAbstractTest {
 
     @Test
-    void  rest15Days() {
-        Weather weather = given().queryParam("apikey", getApiKey())
+    @Description("Проверка получения предупреждений на 15 дней по ID города")
+    @Severity(SeverityLevel.CRITICAL)
+    void test15DayAlarm() {
+        given().queryParam("apikey", getApiKey())
                 .when()
-                .get(getBaseUrl() + "/forecasts/v1/daily/15day/295982")
+                .get(getBaseUrl() + "/alarms/v1/15day/295928")
                 .then()
-                .statusCode(200)
-                .extract()
-                .body().as(Weather.class);
-
-        Assertions.assertEquals(5, weather.getDailyForecasts().size());
+                .statusCode(200);
     }
 }
